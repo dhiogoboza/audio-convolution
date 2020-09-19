@@ -44,7 +44,7 @@ def convolve(args):
 
 def main():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--input', '-i', default='samples/you_got_it.wav')
+	parser.add_argument('--input', '-i', default='samples/Please_Open_The_Door_Loud.wav')
 	parser.add_argument('--output', '-o', default='output.wav')
 	parser.add_argument('--impulse', '-ip', default='impulses/ChurchSchellingwoude/impulse.wav')
 	parser.add_argument('--method', '-m', choices=['fft', 'convolution'], default="fft")

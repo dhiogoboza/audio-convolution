@@ -39,9 +39,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
     <h1><b>Results</b></h1>
-    <div class="w3-section w3-bottombar w3-padding-16">
+    <div class="w3-section w3-bottombar w3-padding-16" style="position: relative">
       <span class="w3-margin-right">Sound:</span> 
-      <button class="w3-button w3-black">Please Open The Door</button>
+      <button class="w3-button w3-black">Please Open The Door </button>
+      <audio controls style="position: absolute; top: 5px;">
+	    <source src="samples/Please_Open_The_Door_Loud.wav" type="audio/wav">
+	    Your browser does not support the audio element.
+      </audio>
     </div>
     </div>
   </header>
