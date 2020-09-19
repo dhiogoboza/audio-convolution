@@ -15,10 +15,10 @@ python main.py [options]
 
 Option | Type | Default | Description
 ------ | ---- | ------- | -------
---output | string | output.wav | Output audio file name
---input  | string | samples/Please_Open_The_Door_Loud.wav | Input audio file name
---impulse | string | impulses/ChurchSchellingwoude/impulse.wav | Impulse audio file name
---method | enum | convolution | Function to use in convolution (fft or convolution)
---play | bool | True | Play audio after convolution finish
---debug | bool | False | Enable debug logs
+-o | string | output.wav | Output audio file name
+-i  | string | samples/Please_Open_The_Door_Loud.wav | Input audio file name
+-ip | string | impulses/ChurchSchellingwoude/impulse.wav | Impulse audio file name
+-m | enum | convolution | Function to use in convolution (fft or convolution)
+-p | bool | True | Play audio after convolution finish
+-d | bool | False | Enable debug logs
 
