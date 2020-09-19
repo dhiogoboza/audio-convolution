@@ -7,6 +7,9 @@ verify_ssl = true
 
 [packages]
 scipy = "*"
+loguru = "*"
+playsound = "*"
+"vext.gi" = "*"
 
 [requires]
 python_version = "3.6"

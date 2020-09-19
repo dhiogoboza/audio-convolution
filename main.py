@@ -1,53 +1,61 @@
-#from scipy.io import wavfile
-from scipy import signal
-
+import argparse
 import numpy
 import wavfile
 
-#from scipy.io import wavfile
-import utility
-#fs, sig = wavfile.read('samples/001.wav')
-#normalized = utility.pcm2float(sig, 'float32')
-#print("normalized", normalized)
+from loguru import logger
+from playsound import playsound
+from scipy import signal
 
+def convolve(args):
+	sample_res = wavfile.read(args['input'], normalized=True, forcestereo=True)
+	impulse_res = wavfile.read(args['impulse'], normalized=True, forcestereo=True)
 
-sample_res = wavfile.read('samples/001.wav')
-impulse_res = wavfile.read('impulses/Church_Schellingwoude/Church_Schellingwoude.wav')
+	debug = args['debug']
 
-print("Sample rate", sample_res[0])
-print("Impulse rate", impulse_res[0])
+	if debug:
+		logger.debug('sample data: \n{data}', data=sample_res[1])
+		logger.debug('impulse_res: \n{data}', data=impulse_res[1])
 
-#output_data = numpy.convolve(numpy.ndarray.flatten(impulse_res[1]), numpy.ndarray.flatten(sample_res[1]))
+	sr = sample_res[1]#utility.pcm2float(sample_res[1], 'float64')
+	ir = impulse_res[1]#utility.pcm2float(impulse_res[1], 'float64')
+	
+	if debug:
+		logger.debug('sample data as float: \n{data}', data=sr)
 
-sr = utility.pcm2float(sample_res[1], 'float32')
-ir = utility.pcm2float(impulse_res[1], 'float32')
+	if args['output'] == 'convolve':
+		# use numpy convolve
+		logger.info('Using numpy.convolve')
+		out_0 = numpy.convolve(sr[:, 0], ir[:, 0])
+		out_1 = numpy.convolve(sr[:, 1], ir[:, 1])
+	else:
+		# use scipy fftconvolve
+		logger.info('Using scipy.signal.fftconvolve')
+		out_0 = signal.fftconvolve(sr[:, 0], ir[:, 0])
+		out_1 = signal.fftconvolve(sr[:, 1], ir[:, 1])
 
-out_0 = signal.fftconvolve(sr[:, 1], ir[:, 1])
-out_1 = signal.fftconvolve(sr[:, 1], ir[:, 1])
-out = numpy.vstack((utility.float2pcm(out_0, 'int16'), utility.float2pcm(out_1, 'int16'))).T
+	# merge channels
+	out = numpy.vstack((out_0, out_1)).T
 
-# save output
-wavfile.write("output.wav", sample_res[0], out)
+	# save output
+	wavfile.write(args['output'], sample_res[0], out, normalized=True)
+	
+	if args['play']:
+		playsound(args['output'])
 
-"""
-output_data = numpy.zeros((len(sample_res[1]), 2))
-impulse_index = 0
-current_sample = 0
-for sample_el in sample_res[1]:
-	#print("impulse_res[1][impulse_index]", impulse_res[1][impulse_index])
-	#print("sample_el", sample_el)
+def main():
+	parser = argparse.ArgumentParser()
+	parser.add_argument('--input', '-i', default='samples/you_got_it.wav')
+	parser.add_argument('--output', '-o', default='output.wav')
+	parser.add_argument('--impulse', '-ip', default='impulses/ChurchSchellingwoude/impulse.wav')
+	parser.add_argument('--method', '-m', choices=['fft', 'convolution'], default="fft")
+	parser.add_argument('--play', '-p', default=False)
+	parser.add_argument('--debug', '-d', default=False)
+	
+	args = vars(parser.parse_args())
+	if not args['impulse'].endswith('.wav'):
+		args['impulse'] = args['impulse'] + '/impulse.wav'
 
-	output_data[current_sample][0] = impulse_res[1][impulse_index][0] * sample_el[0]
-	output_data[current_sample][1] = impulse_res[1][impulse_index][1] * sample_el[1]
+	convolve(args)
 
-	impulse_index += 1
-	current_sample += 1
-	if impulse_index == len(impulse_res[1]):
-		impulse_index = 0
-
-# save output
-print("sample_res", sample_res[1])
-print("impulse_res", impulse_res[1])
-print("out", output_data)
-wavfile.write("output.wav", sample_res[0], output_data)
-"""
+if __name__ == "__main__":
+	main()

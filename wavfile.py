@@ -101,6 +101,8 @@ def _read_data_chunk(fid, noc, bits, normalized=False):
 
 def _skip_unknown_chunk(fid):
     data = fid.read(4)
+    if len(data) == 0:
+    	return
     size = struct.unpack('<i', data)[0]
     if bool(size & 1):     # if odd number of bytes, move 1 byte further (data chunk is word-aligned)
       size += 1 
@@ -213,8 +215,6 @@ def read(file, readmarkers=False, readmarkerlabels=False, readmarkerslist=False,
         + ((_markerslist,) if readmarkerslist else ()) \
         + ((loops,) if readloops else ()) \
         + ((pitch,) if readpitch else ())
-
-  
 
 def write(filename, rate, data, bitrate=None, markers=None, loops=None, pitch=None, normalized=False):
     """
