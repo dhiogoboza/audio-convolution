@@ -19,6 +19,6 @@ Option | Type | Default | Description
 --input  | string | samples/Please_Open_The_Door_Loud.wav | Input audio file name
 --impulse | string | impulses/ChurchSchellingwoude/impulse.wav | Impulse audio file name
 --method | enum | convolution | Function to use in convolution (fft or convolution)
---play | boolean | True | Play audio after convolution finish
---debug | boolean | False | Enable debug logs
+--play | bool | True | Play audio after convolution finish
+--debug | bool | False | Enable debug logs
 
