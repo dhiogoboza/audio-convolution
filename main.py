@@ -48,7 +48,7 @@ def main():
 	parser.add_argument('--output', '-o', default='output.wav')
 	parser.add_argument('--impulse', '-ip', default='impulses/ChurchSchellingwoude/impulse.wav')
 	parser.add_argument('--method', '-m', choices=['fft', 'convolution'], default="fft")
-	parser.add_argument('--play', '-p', default=False)
+	parser.add_argument('--play', '-p', default=True)
 	parser.add_argument('--debug', '-d', default=False)
 	
 	args = vars(parser.parse_args())
