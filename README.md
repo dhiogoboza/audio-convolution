@@ -21,4 +21,5 @@ Option | Type | Default | Description
 -m | enum | convolution | Function to use in convolution (fft or convolution)
 -p | bool | True | Play audio after convolution finish
 -d | bool | False | Enable debug logs
+-c | enum | mono | Channels to use (mono or stereo)
 
