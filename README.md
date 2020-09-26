@@ -22,4 +22,4 @@ Option | Type | Default | Description
 -p | bool | True | Play audio after convolution finish
 -d | bool | False | Enable debug logs
 -c | enum | mono | Channels to use (mono or stereo)
-
+-h |  |  | Show help
