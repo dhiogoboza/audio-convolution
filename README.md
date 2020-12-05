@@ -8,6 +8,7 @@ Convolve input wav audio with an wav impulse audio. Impulses extracted from [htt
 ## Usage
 ```
 pipenv shell
+pipenv install
 python main.py [options]
 ```
 
