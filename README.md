@@ -24,3 +24,7 @@ Option | Type | Default | Description
 -d | bool | False | Enable debug logs
 -c | enum | mono | Channels to use (mono or stereo)
 -h |  |  | Show help
+
+## Demo
+
+https://dhiogoboza.github.io/audio-convolution/
