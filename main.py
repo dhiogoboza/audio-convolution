@@ -23,7 +23,7 @@ def convolve(args):
     if debug:
         logger.debug('sample data as float: \n{data}', data=sr)
 
-    if args['output'] == 'convolve':
+    if args['method'] == 'convolution':
         # use numpy convolve
         logger.info('Using numpy.convolve')
         out_0 = numpy.convolve(sr[:, 0], ir[:, 0])
@@ -55,7 +55,7 @@ def main():
     parser.add_argument('--impulse', '-ip', default='impulses/ChurchSchellingwoude/impulse.wav', help='Impulse audio file name')
     parser.add_argument('--method', '-m', choices=['fft', 'convolution'], default='fft', help='Function to use in convolution')
     parser.add_argument('--play', '-p', default=True, help='Play audio after convolution finish')
-    parser.add_argument('--debug', '-d', default=False, help='Enable debug logs')
+    parser.add_argument('--debug', '-d', help='Enable debug logs', action="store_true")
     parser.add_argument('--channels', '-c', choices=['mono', 'stereo'], default='mono', help='Channels to use')
 
     args = vars(parser.parse_args())
